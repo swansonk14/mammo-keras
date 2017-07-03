@@ -1,5 +1,4 @@
 import numpy as np
-import sys
 import traceback
 
 def batch_generator(split_group, metadata, batch_size=128, image_pipeline=None, label_pipeline=None, debug=False):

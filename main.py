@@ -1,9 +1,6 @@
 import argparse
 import json
 import yaml
-import extractors
-import loaders
-import transformers
 from models import load_model, build_model_from_config
 from pipeline import build_pipeline_from_config
 from generators import batch_generator
