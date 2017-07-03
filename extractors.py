@@ -18,17 +18,15 @@ class Key(Extractor):
     """ Extracts a piece of information from a dictionary using a list of keys. """
 
     def __init__(self, **kwargs):
-        key_array = kwargs['key_array']
-        # If key_array is not a list, convert it to a list
-        if type(key_array) != list:
-            self.key_array = [key_array]
-        else:
-            self.key_array = key_array
+        keys = kwargs['keys']
+        if type(keys) != list:
+            keys = [keys]
+        self.keys = keys
 
-    # Returns `row[key_array[0]][key_array[1]]...`
+    # Returns `row[keys[0]][keys[1]]...`
     def extract(self, row):
         data = row
-        for key in self.key_array:
+        for key in self.keys:
             data = data[key]
 
         return data

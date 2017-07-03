@@ -10,7 +10,7 @@ image_pipeline:
     extractor:
         class: 'Key'
         params:
-            key_array: 'image_path_256'
+            keys: 'image_path_256'
     loader:
         class: 'GrayscaleImage'
     transformers:
@@ -25,6 +25,6 @@ label_pipeline:
     extractor:
         class: 'Key'
         params: 
-            key_array: 'density'
+            keys: 'density'
     transformers:
         - class: 'BinarizeLabel'
