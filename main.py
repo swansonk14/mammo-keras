@@ -21,9 +21,9 @@ parser.add_argument('--channel_size', type=int, default=1, help='number of image
 parser.add_argument('--label_size', type=int, default=2, help='size of label vector')
 parser.add_argument('--path_keys', type=str, default='image_path_256', help='keys of image path in metadata')
 parser.add_argument('--label_keys', type=str, default='density', help='keys of label in metadata')
-parser.add_argument('--examples_per_epoch', type=int, default=1000, help='number of examples to train on in each epoch')
-parser.add_argument('--examples_per_val', type=int, default=2000, help='number of examples to validate on after each epoch (determines which sets of parameters are saved)')
-parser.add_argument('--examples_per_eval', type=int, default=1000, help='number of examples to evaluate on after each epoch')
+parser.add_argument('--examples_per_epoch', type=int, default=20000, help='number of examples to train on in each epoch')
+parser.add_argument('--examples_per_val', type=int, default=5000, help='number of examples to validate on after each epoch (determines which sets of parameters are saved)')
+parser.add_argument('--examples_per_eval', type=int, default=2000, help='number of examples to evaluate on after each epoch')
 parser.add_argument('--debug', action='store_true', help='True to print exceptions')
 args = parser.parse_args()
 
