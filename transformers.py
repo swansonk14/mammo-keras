@@ -10,27 +10,36 @@ class Transformer:
 
 	__metaclass__ = ABCMeta
 
+	def __init__(self, **kwargs):
+		pass
+
 	@abstractmethod
 	def transform(self, data):
 		pass
 
 class ResizeImage(Transformer):
-	def __init__(self, size):
+	def __init__(self, **kwargs):
+		size = kwargs['size']
+		if type(size) == list:
+			size = tuple(size)
 		self.size = size
 
 	def transform(self, image):
 		return imresize(image, self.size)
 
 class NormalizeImage(Transformer):
-	def __init__(self, mean=MEAN, std=STD):
-		self.mean = mean
-		self.std = std
+	def __init__(self, **kwargs):
+		self.mean = kwargs.get('mean', MEAN)
+		self.std = kwargs.get('std', STD)
 
 	def transform(self, image):
 		return (image - self.mean) / self.std
 
 class ReshapeImage(Transformer):
-	def __init__(self, shape):
+	def __init__(self, **kwargs):
+		shape = kwargs['shape']
+		if type(shape) == list:
+			shape = tuple(shape)
 		self.shape = shape
 
 	def transform(self, image):

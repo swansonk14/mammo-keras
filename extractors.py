@@ -3,6 +3,9 @@ from abc import ABCMeta, abstractmethod
 class Extractor:
 	__metaclass__ = ABCMeta
 
+	def __init__(self, **kwargs):
+		pass
+
 	@abstractmethod
 	def extract(self, row):
 		pass
@@ -14,7 +17,8 @@ class Identity(Extractor):
 class Key(Extractor):
 	""" Extracts a piece of information from a dictionary using a list of keys. """
 
-	def __init__(self, key_array=[]):
+	def __init__(self, **kwargs):
+		key_array = kwargs['key_array']
 		# If key_array is not a list, convert it to a list
 		if type(key_array) != list:
 			self.key_array = [key_array]

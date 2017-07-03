@@ -1,3 +1,5 @@
-*
-!.gitignore
-!*.py
+*.pyc
+**/*.json
+**/*.yaml
+**/*.hdf5
+logs

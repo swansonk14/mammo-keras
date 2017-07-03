@@ -6,6 +6,9 @@ class Loader:
 
 	__metaclass__ = ABCMeta
 
+	def __init__(self, **kwargs):
+		pass
+
 	@abstractmethod
 	def load(self, input):
 		pass
@@ -17,3 +20,4 @@ class Identity(Loader):
 class GrayscaleImage(Loader):
 	def load(self, path):
 		return imread(path, mode='L')
+

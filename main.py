@@ -1,9 +1,10 @@
 import argparse
 import json
+import yaml
 import extractors
 import loaders
 import transformers
-from pipeline import Pipeline
+from pipeline import create_pipeline_from_config
 from generators import batch_generator
 from evaluation import evaluate_performance_on_groups
 from utils import get_model_paths
@@ -15,6 +16,7 @@ from keras.callbacks import ModelCheckpoint
 parser = argparse.ArgumentParser(description='Flags for model')
 parser.add_argument('--data_path', type=str, required=True, help='path to metadata')
 parser.add_argument('--model_name', type=str, required=True, help='name of the model')
+parser.add_argument('--pipeline_config_path', type=str, required=True, help='path to a yaml config file specifying the image and label pipelines')
 parser.add_argument('--batch_size', type=int, default=128, help='batch size')
 parser.add_argument('--image_size', type=int, default=256, help='image size')
 parser.add_argument('--channel_size', type=int, default=1, help='number of image channels')
@@ -37,17 +39,11 @@ model.compile(optimizer=optim, loss='categorical_crossentropy', metrics=['accura
 paths = get_model_paths(args.model_name)
 
 print('Building data pipelines...')
-image_extractor = extractors.Key(args.path_keys)
-image_loader = loaders.GrayscaleImage()
-image_transformers = [transformers.ResizeImage((args.image_size, args.image_size)),
-					  transformers.NormalizeImage(),
-					  transformers.ReshapeImage((args.image_size, args.image_size, args.channel_size))]
-image_pipeline = Pipeline(image_extractor, image_loader, image_transformers)
+with open(args.pipeline_config_path, 'r') as config_file:
+	pipeline_configs = yaml.load(config_file)
 
-label_extractor = extractors.Key(args.label_keys)
-label_loader = loaders.Identity()
-label_transformers = [transformers.BinarizeLabel()]
-label_pipeline = Pipeline(label_extractor, label_loader, label_transformers)
+image_pipeline = create_pipeline_from_config(pipeline_configs['image'])
+label_pipeline = create_pipeline_from_config(pipeline_configs['label'])
 
 print('Loading metadata...')
 with open(args.data_path, 'r') as data_file:
