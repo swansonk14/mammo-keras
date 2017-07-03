@@ -40,14 +40,14 @@ paths = get_model_paths(args.model_name)
 
 print('Building data pipelines...')
 with open(args.pipeline_config_path, 'r') as config_file:
-	pipeline_configs = yaml.load(config_file)
+    pipeline_configs = yaml.load(config_file)
 
 image_pipeline = create_pipeline_from_config(pipeline_configs['image'])
 label_pipeline = create_pipeline_from_config(pipeline_configs['label'])
 
 print('Loading metadata...')
 with open(args.data_path, 'r') as data_file:
-	metadata = json.load(data_file)
+    metadata = json.load(data_file)
 print('Metadata length = {}'.format(len(metadata)))
 
 print('Creating generators...')
@@ -60,25 +60,25 @@ group_generators = [(train_generator, 'train'), (dev_generator, 'dev'), (test_ge
 checkpoint = ModelCheckpoint(paths['checkpoint_path'], monitor='val_loss', verbose=1, save_best_only=True, mode='min')
 
 with open(paths['json_path'], 'w') as json_file:
-	json_file.write(model.to_json())
+    json_file.write(model.to_json())
 
 class Histories(keras.callbacks.Callback):
-	def __init__(self, args):
-		super(Histories, self).__init__()
-		self.results = {'flags': vars(args), 'results': []}
+    def __init__(self, args):
+        super(Histories, self).__init__()
+        self.results = {'flags': vars(args), 'results': []}
 
-	def on_epoch_end(self, epoch, logs={}):
-		epoch_results = evaluate_performance_on_groups(model, group_generators, steps_per_eval=int(args.examples_per_eval / args.batch_size))
-		epoch_results['epoch'] = epoch
-		self.results['results'].append(epoch_results)
-		with open(paths['results_path'], 'w') as results_file:
-			json.dump(self.results, results_file, indent=4, sort_keys=True)
+    def on_epoch_end(self, epoch, logs={}):
+        epoch_results = evaluate_performance_on_groups(model, group_generators, steps_per_eval=int(args.examples_per_eval / args.batch_size))
+        epoch_results['epoch'] = epoch
+        self.results['results'].append(epoch_results)
+        with open(paths['results_path'], 'w') as results_file:
+            json.dump(self.results, results_file, indent=4, sort_keys=True)
 
 print('Begin training...')
 model.fit_generator(train_generator,
-					steps_per_epoch=int(args.examples_per_epoch / args.batch_size),
-					verbose=1,
-					epochs=1000,
-					validation_data=dev_generator,
-					validation_steps=int(args.examples_per_val / args.batch_size),
-					callbacks=[TensorBoard(log_dir=paths['log_dir']), checkpoint, Histories(args)])
+                    steps_per_epoch=int(args.examples_per_epoch / args.batch_size),
+                    verbose=1,
+                    epochs=1000,
+                    validation_data=dev_generator,
+                    validation_steps=int(args.examples_per_val / args.batch_size),
+                    callbacks=[TensorBoard(log_dir=paths['log_dir']), checkpoint, Histories(args)])
