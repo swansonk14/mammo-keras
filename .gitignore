@@ -1,5 +1,4 @@
 *.pyc
 **/*.json
-**/*.yaml
 **/*.hdf5
 logs
