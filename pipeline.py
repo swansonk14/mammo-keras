@@ -2,7 +2,7 @@ import extractors
 import loaders
 import transformers
 
-def create_pipeline_from_config(config):
+def build_pipeline_from_config(config):
     if 'extractor' in config:
         extractor_class = getattr(extractors, config['extractor']['class'])
         extractor_params = config['extractor'].get('params', dict())
