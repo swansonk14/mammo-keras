@@ -1,12 +1,10 @@
 import numpy as np
 import traceback
 
-def batch_generator(split_group, metadata, batch_size=128, image_pipeline=None, label_pipeline=None, debug=False):
-
-    metadata = [row for row in metadata if row.get('split_group', None) == split_group]
-    b_i = 0
+def batch_generator(metadata, batch_size=128, image_pipeline=None, label_pipeline=None, debug=False):
     batch_images = [None]*batch_size
     batch_labels = [None]*batch_size
+    b_i = 0
     
     while True:
         np.random.shuffle(metadata)

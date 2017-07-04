@@ -1,0 +1,8 @@
+---
+num_outputs: &NUM_OUTPUTS 2
+extractor:
+    class: 'Key'
+    params: 
+        keys: 'density'
+transformers:
+    - class: 'BinarizeLabel'

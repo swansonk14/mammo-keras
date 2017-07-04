@@ -1,9 +1,9 @@
 data_path='/raid/scratch/metadata/cohort_nejm_huge_valid.json'
-model_architecture='resnet_18'
-model_name='resnet_18_density'
+model_architecture='resnet_50'
+model_name='resnet_50_density'
 image_pipeline='grayscale_256'
 label_pipeline='binary'
-batch_size=128
+batch_size=64
 examples_per_epoch=20000
 examples_per_val=5000
 examples_per_eval=2000
