@@ -1,7 +1,7 @@
 import numpy as np
 import traceback
 
-def batch_generator(metadata, batch_size=128, image_pipeline=None, label_pipeline=None, debug=False):
+def batch_generator(metadata, batch_size, image_pipeline, label_pipeline, debug=False):
     batch_images = [None]*batch_size
     batch_labels = [None]*batch_size
     b_i = 0

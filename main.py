@@ -70,9 +70,9 @@ print('Dev metadata length = {}'.format(len(dev_metadata)))
 print('Test metadata length = {}'.format(len(test_metadata)))
 
 print('Creating generators...')
-train_generator = batch_generator(train_metadata, batch_size=args.batch_size, image_pipeline=image_pipeline, label_pipeline=label_pipeline, debug=args.debug)
-dev_generator = batch_generator(dev_metadata, batch_size=args.batch_size, image_pipeline=image_pipeline, label_pipeline=label_pipeline, debug=args.debug)
-test_generator = batch_generator(test_metadata, batch_size=args.batch_size, image_pipeline=image_pipeline, label_pipeline=label_pipeline, debug=args.debug)
+train_generator = batch_generator(train_metadata, args.batch_size, image_pipeline, label_pipeline, debug=args.debug)
+dev_generator = batch_generator(dev_metadata, args.batch_size, image_pipeline, label_pipeline, debug=args.debug)
+test_generator = batch_generator(test_metadata, args.batch_size, image_pipeline, label_pipeline, debug=args.debug)
 
 group_generators = [(train_generator, 'train'), (dev_generator, 'dev'), (test_generator, 'test')]
 

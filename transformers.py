@@ -29,8 +29,8 @@ class ResizeImage(Transformer):
 
 class NormalizeImage(Transformer):
     def __init__(self, **kwargs):
-        self.mean = kwargs.get('mean', MEAN)
-        self.std = kwargs.get('std', STD)
+        self.mean = float(kwargs.get('mean', MEAN))
+        self.std = float(kwargs.get('std', STD))
 
     def transform(self, image):
         return (image - self.mean) / self.std
