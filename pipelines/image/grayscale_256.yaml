@@ -1,13 +1,11 @@
 ---
 image_size: &IMAGE_SIZE 256
 channel_size: &CHANNEL_SIZE 1
-extractor:
-    class: 'Key'
-    params:
-        keys: 'image_path_256'
-loader:
-    class: 'GrayscaleImage'
 transformers:
+    - class: 'KeyExtractor'
+      params:
+        keys: 'image_path_256'
+    - class: 'GrayscaleImageLoader'
     - class: 'ResizeImage'
       params:
         size: [*IMAGE_SIZE, *IMAGE_SIZE]

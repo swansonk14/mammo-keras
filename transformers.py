@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 import numpy as np
-from scipy.misc import imresize
+from scipy.misc import imread, imresize
 
 MEAN = 46.5584534313
 STD =  36.8535621221
@@ -16,6 +16,27 @@ class Transformer:
     @abstractmethod
     def transform(self, data):
         pass
+
+class Key(Transformer):
+    """ Extracts a piece of information from a dictionary using a list of keys. """
+
+    def __init__(self, **kwargs):
+        keys = kwargs['keys']
+        if type(keys) != list:
+            keys = [keys]
+        self.keys = keys
+
+    # Returns `row[keys[0]][keys[1]]...`
+    def transform(self, row):
+        data = row
+        for key in self.keys:
+            data = data[key]
+
+        return data
+
+class GrayscaleImageLoader(Transformer):
+    def transform(self, path):
+        return imread(path, mode='L')
 
 class ResizeImage(Transformer):
     def __init__(self, **kwargs):
